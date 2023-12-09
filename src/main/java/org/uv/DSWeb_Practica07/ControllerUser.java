@@ -4,13 +4,61 @@
  */
 package org.uv.DSWeb_Practica07;
 
-
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 /**
  *
- * @author zurisaddairj
+ * @author Wendy Vallejo
  */
-
+@RestController
+@RequestMapping("/api/User")
 public class ControllerUser {
-    
+
+    @Autowired
+    private RepositoryUser repositoryUser;
+
+    @PostMapping
+    public ResponseEntity<User> post(@RequestBody User user) {
+        User userNew = repositoryUser.save(user);
+        return ResponseEntity.ok(userNew);
+    }
+
+    @GetMapping()
+    public List<User> list() {
+        List<User> lstUser = repositoryUser.findAll();
+        return lstUser;
+    }
+
+    @GetMapping("/{id}")
+    public User get(@PathVariable long id) {
+        User user = new User("Wendy", "12345");
+
+        return user;
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> put(@PathVariable String id, @RequestBody Object input) {
+        return null;
+    }
+
+//    @PostMapping
+//    public ResponseEntity<?> post(@RequestBody User user) {
+//        return null;
+//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable String id) {
+        return null;
+    }
+
 }
